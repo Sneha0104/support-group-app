@@ -10,8 +10,9 @@ class Login extends StatelessWidget {
         title: Text("Login Page"),
       ),
       body: Container(
-          padding: EdgeInsets.all(20.0),
+          padding: EdgeInsets.all(50.0),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
               Text(
                 'LOGIN',
@@ -24,16 +25,24 @@ class Login extends StatelessWidget {
                   obscureText: true,
                   decoration: InputDecoration(labelText: "Password")),
               RaisedButton(
-                  child: Text("LOGIN"),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => Home()),
-                    );
-                  }),
-              Text('Don\'t have an account ?'),
+                  child: Column(
+                    children: <Widget>[
+                      Padding(padding: const EdgeInsets.only(top: 5)),
+                      Text("LOGIN"),
+                    ],
+                  ),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: new BorderRadius.circular(80.0)),
+                  onPressed: () {}),
               RaisedButton(
-                  child: Text("SIGN UP"),
+                  child: Column(
+                    children: <Widget>[
+                      Padding(padding: const EdgeInsets.only(top: 5)),
+                      Text("SIGN UP"),
+                    ],
+                  ),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: new BorderRadius.circular(80.0)),
                   onPressed: () {
                     Navigator.push(
                       context,
