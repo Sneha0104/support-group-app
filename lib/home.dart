@@ -1,4 +1,5 @@
 import 'dart:ffi';
+import 'package:intl/intl.dart';
 
 import 'package:flutter/material.dart';
 import 'package:hackverse/queries.dart' as queries;
@@ -19,6 +20,7 @@ class _Home extends State<Home> {
         length: 3,
         child: Scaffold(
           appBar: AppBar(
+            backgroundColor: Colors.pinkAccent,
             bottom: TabBar(
               tabs: [
                 Tab(icon: Icon(Icons.people)),
@@ -55,7 +57,7 @@ class _Home extends State<Home> {
                                       padding: const EdgeInsets.fromLTRB(
                                           12.0, 12.0, 12.0, 6.0),
                                       child: Text(
-                                        'modjj',
+                                        meetup['location'],
                                         style: TextStyle(
                                             fontSize: 22.0,
                                             fontWeight: FontWeight.bold),
@@ -65,7 +67,7 @@ class _Home extends State<Home> {
                                       padding: const EdgeInsets.fromLTRB(
                                           12.0, 6.0, 12.0, 12.0),
                                       child: Text(
-                                        meetup['location'],
+                                        meetup['addr'],
                                         style: TextStyle(fontSize: 18.0),
                                       ),
                                     ),
@@ -78,7 +80,13 @@ class _Home extends State<Home> {
                                         MainAxisAlignment.spaceEvenly,
                                     children: <Widget>[
                                       Text(
-                                        meetup['date'].toString(),
+                                        new DateFormat.yMMMd().format(
+                                            DateTime.parse(meetup['time'])),
+                                        style: TextStyle(color: Colors.grey),
+                                      ),
+                                      Text(
+                                        new DateFormat.jm().format(
+                                            DateTime.parse(meetup['time'])),
                                         style: TextStyle(color: Colors.grey),
                                       ),
                                       Padding(
@@ -104,127 +112,128 @@ class _Home extends State<Home> {
                       itemCount: meetups.length);
                 },
               ),
-              ListView.builder(
-                itemBuilder: (context, position) {
-                  return Column(
-                    children: <Widget>[
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Padding(
-                                padding: const EdgeInsets.fromLTRB(
-                                    12.0, 12.0, 12.0, 6.0),
-                                child: Text(
-                                  "book/movie",
-                                  style: TextStyle(
-                                      fontSize: 22.0,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.fromLTRB(
-                                    12.0, 6.0, 12.0, 12.0),
-                                child: Text(
-                                  "description",
-                                  style: TextStyle(fontSize: 18.0),
-                                ),
-                              ),
-                            ],
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              Query(
+                options:
+                    QueryOptions(document: queries.readBooks, pollInterval: 4),
+                builder: (QueryResult res,
+                    {VoidCallback refetch, FetchMore fetchMore}) {
+                  if (res.loading) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+
+                  final List<dynamic> meetups = res.data['book_or_movie'];
+                  return ListView.builder(
+                      itemBuilder: (context, position) {
+                        final Map<String, dynamic> meetup = meetups[position];
+                        return Column(
+                          children: <Widget>[
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: <Widget>[
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Icon(
-                                    Icons.star,
-                                    size: 35.0,
-                                    color: Colors.grey,
-                                  ),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Padding(
+                                      padding: const EdgeInsets.fromLTRB(
+                                          12.0, 12.0, 12.0, 6.0),
+                                      child: Text(
+                                        meetup['name'],
+                                        style: TextStyle(
+                                            fontSize: 22.0,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.fromLTRB(
+                                          12.0, 6.0, 12.0, 12.0),
+                                      child: Text(
+                                        meetup['description'],
+                                        style: TextStyle(fontSize: 18.0),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.fromLTRB(
+                                          12.0, 6.0, 12.0, 12.0),
+                                      child: Icon(
+                                        Icons.star,
+                                        size: 20.0,
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ],
                             ),
-                          ),
-                        ],
-                      ),
-                      Divider(
-                        height: 2.0,
-                        color: Colors.grey,
-                      )
-                    ],
-                  );
+                            Divider(
+                              height: 2.0,
+                              color: Colors.grey,
+                            )
+                          ],
+                        );
+                      },
+                      itemCount: meetups.length);
                 },
-                itemCount: 10,
               ),
-              ListView.builder(
-                itemBuilder: (context, position) {
-                  return Column(
-                    children: <Widget>[
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Padding(
-                                padding: const EdgeInsets.fromLTRB(
-                                    12.0, 12.0, 12.0, 6.0),
-                                child: Text(
-                                  "psychologist",
-                                  style: TextStyle(
-                                      fontSize: 22.0,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.fromLTRB(
-                                    12.0, 6.0, 12.0, 12.0),
-                                child: Text(
-                                  "contact",
-                                  style: TextStyle(fontSize: 18.0),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.fromLTRB(
-                                    12.0, 6.0, 12.0, 12.0),
-                                child: Text(
-                                  "email",
-                                  style: TextStyle(fontSize: 18.0),
-                                ),
-                              ),
-                            ],
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              Query(
+                options:
+                    QueryOptions(document: queries.readMods, pollInterval: 4),
+                builder: (QueryResult res,
+                    {VoidCallback refetch, FetchMore fetchMore}) {
+                  if (res.loading) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+
+                  final List<dynamic> meetups = res.data['mods'];
+                  return ListView.builder(
+                      itemBuilder: (context, position) {
+                        final Map<String, dynamic> meetup = meetups[position];
+                        return Column(
+                          children: <Widget>[
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: <Widget>[
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Icon(
-                                    Icons.person,
-                                    size: 35.0,
-                                    color: Colors.grey,
-                                  ),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Padding(
+                                      padding: const EdgeInsets.fromLTRB(
+                                          12.0, 12.0, 12.0, 6.0),
+                                      child: Text(
+                                        meetup['name'],
+                                        style: TextStyle(
+                                            fontSize: 22.0,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.fromLTRB(
+                                          12.0, 6.0, 12.0, 12.0),
+                                      child: Text(
+                                        meetup['ph'].toString(),
+                                        style: TextStyle(fontSize: 18.0),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.fromLTRB(
+                                          12.0, 6.0, 12.0, 12.0),
+                                      child: Text(
+                                        meetup['email'],
+                                        style: TextStyle(fontSize: 18.0),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ],
                             ),
-                          ),
-                        ],
-                      ),
-                      Divider(
-                        height: 2.0,
-                        color: Colors.grey,
-                      )
-                    ],
-                  );
+                            Divider(
+                              height: 2.0,
+                              color: Colors.grey,
+                            )
+                          ],
+                        );
+                      },
+                      itemCount: meetups.length);
                 },
-                itemCount: 10,
               ),
             ],
           ),

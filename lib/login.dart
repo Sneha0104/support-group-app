@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
+
 import 'package:hackverse/home.dart';
 import 'package:hackverse/home_psych.dart';
 import 'package:hackverse/usersignup.dart';
@@ -8,10 +10,11 @@ class Login extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.pinkAccent,
         title: Text("Login Page"),
       ),
       body: Container(
-          padding: EdgeInsets.all(50.0),
+          padding: EdgeInsets.all(60.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[

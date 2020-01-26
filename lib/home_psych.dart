@@ -21,6 +21,7 @@ class _Home extends State<Home_Psych> {
         length: 3,
         child: Scaffold(
           appBar: AppBar(
+            backgroundColor: Colors.pinkAccent,
             bottom: TabBar(
               tabs: [
                 Tab(icon: Icon(Icons.portrait)),

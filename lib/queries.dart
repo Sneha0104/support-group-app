@@ -19,3 +19,23 @@ mutation MyMutation {
   }
 }
 ''';
+const readBooks = '''
+query MyQuery {
+  __typename
+  book_or_movie {
+    description
+    name
+  }
+}
+''';
+
+const readMods = '''
+query MyQuery {
+  __typename
+  mods {
+    email
+    name
+    ph
+  }
+}
+''';
