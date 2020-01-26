@@ -33,13 +33,12 @@ class _Home extends State<Home> {
               Query(
                 options: QueryOptions(
                     document: queries.readMeetups, pollInterval: 4),
-                builder: (QueryResult res, {refetch: () {return void }}) {
+                builder: (QueryResult res,
+                    {VoidCallback refetch, FetchMore fetchMore}) {
                   if (res.loading) {
                     return const Center(child: CircularProgressIndicator());
                   }
-                  if (res.hasErrors) {
-                    return Text("\nErrors:" + res.errors.join(',\n '));
-                  }
+
                   final List<dynamic> meetups = res.data['meetups'];
                   return ListView.builder(
                       itemBuilder: (context, position) {
@@ -56,7 +55,7 @@ class _Home extends State<Home> {
                                       padding: const EdgeInsets.fromLTRB(
                                           12.0, 12.0, 12.0, 6.0),
                                       child: Text(
-                                        meetup['mod'],
+                                        'modjj',
                                         style: TextStyle(
                                             fontSize: 22.0,
                                             fontWeight: FontWeight.bold),
@@ -79,7 +78,7 @@ class _Home extends State<Home> {
                                         MainAxisAlignment.spaceEvenly,
                                     children: <Widget>[
                                       Text(
-                                        meetup['date'],
+                                        meetup['date'].toString(),
                                         style: TextStyle(color: Colors.grey),
                                       ),
                                       Padding(
