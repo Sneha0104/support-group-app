@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hackverse/login.dart';
+import 'package:hackverse/ui/login_page.dart';
+
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:hackverse/meetupCreation.dart';
 
@@ -21,7 +23,7 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           title: 'Support Squad',
           //test phase
-          home: Login(),
+          home: LoginPage(),
           routes: {
             '/login': (context) => Login(),
           },
