@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hackverse/home.dart';
+import 'package:hackverse/home_psych.dart';
 import 'package:hackverse/usersignup.dart';
 
 class Login extends StatelessWidget {
@@ -28,12 +29,32 @@ class Login extends StatelessWidget {
                   child: Column(
                     children: <Widget>[
                       Padding(padding: const EdgeInsets.only(top: 5)),
-                      Text("LOGIN"),
+                      Text("LOGIN(user)"),
                     ],
                   ),
                   shape: RoundedRectangleBorder(
                       borderRadius: new BorderRadius.circular(80.0)),
-                  onPressed: () {}),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Home()),
+                    );
+                  }),
+              RaisedButton(
+                  child: Column(
+                    children: <Widget>[
+                      Padding(padding: const EdgeInsets.only(top: 5)),
+                      Text("LOGIN (Psychologist)"),
+                    ],
+                  ),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: new BorderRadius.circular(80.0)),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Home_Psych()),
+                    );
+                  }),
               RaisedButton(
                   child: Column(
                     children: <Widget>[
